@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { validateUser } = require('../utils/validation');
 
 let users = [];
 let nextId = 1;
@@ -17,11 +18,12 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { name, email } = req.body;
-  if (!name || !email) {
-    return res.status(400).json({ error: 'Name and email are required' });
+  const validation = validateUser(req.body);
+  if (!validation.valid) {
+    return res.status(400).json({ error: validation.error });
   }
-  const user = { id: nextId++, name, email };
+  const { name, email } = req.body;
+  const user = { id: nextId++, name: name.trim(), email: email.trim() };
   users.push(user);
   res.status(201).json(user);
 });
