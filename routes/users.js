@@ -10,7 +10,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id));
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
+  const user = users.find(u => u.id === id);
   if (!user) {
     return res.status(404).json({ error: 'User not found' });
   }
@@ -26,6 +30,19 @@ router.post('/', (req, res) => {
   const user = { id: nextId++, name: name.trim(), email: email.trim() };
   users.push(user);
   res.status(201).json(user);
+});
+
+router.delete('/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
+  const index = users.findIndex(u => u.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  users.splice(index, 1);
+  res.status(204).send();
 });
 
 module.exports = router;
