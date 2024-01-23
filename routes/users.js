@@ -5,6 +5,12 @@ const { validateUser } = require('../utils/validation');
 let users = [];
 let nextId = 1;
 
+// Helper function to reset users (for testing)
+function resetUsers() {
+  users = [];
+  nextId = 1;
+}
+
 router.get('/', (req, res) => {
   res.json(users);
 });
@@ -27,9 +33,36 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: validation.error });
   }
   const { name, email } = req.body;
+  
+  // Check for duplicate email
+  if (users.some(u => u.email === email.trim())) {
+    return res.status(409).json({ error: 'Email already exists' });
+  }
+  
   const user = { id: nextId++, name: name.trim(), email: email.trim() };
   users.push(user);
   res.status(201).json(user);
+});
+
+router.put('/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
+  
+  const index = users.findIndex(u => u.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  
+  const validation = validateUser(req.body);
+  if (!validation.valid) {
+    return res.status(400).json({ error: validation.error });
+  }
+  
+  const { name, email } = req.body;
+  users[index] = { id, name: name.trim(), email: email.trim() };
+  res.json(users[index]);
 });
 
 router.delete('/:id', (req, res) => {
@@ -44,5 +77,10 @@ router.delete('/:id', (req, res) => {
   users.splice(index, 1);
   res.status(204).send();
 });
+
+// Export reset function for testing
+if (process.env.NODE_ENV === 'test') {
+  router.resetUsers = resetUsers;
+}
 
 module.exports = router;
