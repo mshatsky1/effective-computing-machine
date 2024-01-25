@@ -4,10 +4,13 @@ function validateEmail(email) {
 }
 
 function validateUser(user) {
-  if (!user.name || user.name.trim().length === 0) {
+  if (!user.name || typeof user.name !== 'string' || user.name.trim().length === 0) {
     return { valid: false, error: 'Name cannot be empty' };
   }
-  if (!user.email || !validateEmail(user.email)) {
+  if (user.name.trim().length < 2) {
+    return { valid: false, error: 'Name must be at least 2 characters' };
+  }
+  if (!user.email || typeof user.email !== 'string' || !validateEmail(user.email)) {
     return { valid: false, error: 'Invalid email format' };
   }
   return { valid: true };
