@@ -61,7 +61,15 @@ router.put('/:id', (req, res) => {
   }
   
   const { name, email } = req.body;
-  users[index] = { id, name: name.trim(), email: email.trim() };
+  const trimmedEmail = email.trim();
+  
+  // Check for duplicate email (excluding current user)
+  const duplicateUser = users.find(u => u.email === trimmedEmail && u.id !== id);
+  if (duplicateUser) {
+    return res.status(409).json({ error: 'Email already exists' });
+  }
+  
+  users[index] = { id, name: name.trim(), email: trimmedEmail };
   res.json(users[index]);
 });
 
