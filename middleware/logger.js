@@ -4,7 +4,8 @@ function requestLogger(req, res, next) {
   
   res.send = function(data) {
     const duration = Date.now() - start;
-    console.log(`${req.method} ${req.path} - ${res.statusCode} - ${duration}ms`);
+    const statusCode = res.statusCode || 200;
+    console.log(`${req.method} ${req.path} - ${statusCode} - ${duration}ms`);
     originalSend.call(this, data);
   };
   
