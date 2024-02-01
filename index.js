@@ -2,8 +2,9 @@ const express = require('express');
 const userRoutes = require('./routes/users');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const requestLogger = require('./middleware/logger');
+const config = require('./config');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = config.port;
 
 app.use(requestLogger);
 app.use(express.json());
