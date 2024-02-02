@@ -10,7 +10,10 @@ app.use(requestLogger);
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello World' });
+  res.json({ 
+    message: 'Welcome to Effective Computing Machine API',
+    version: '0.2.0'
+  });
 });
 
 app.use('/api/users', userRoutes);
