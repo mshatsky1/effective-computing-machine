@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = require('./routes/users');
+const healthRoutes = require('./routes/health');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const requestLogger = require('./middleware/logger');
 const corsMiddleware = require('./middleware/cors');
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/health', healthRoutes);
 app.use('/api/users', userRoutes);
 
 app.use(notFoundHandler);
