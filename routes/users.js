@@ -12,7 +12,22 @@ function resetUsers() {
 }
 
 router.get('/', (req, res) => {
-  res.json(users);
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  
+  const paginatedUsers = users.slice(startIndex, endIndex);
+  
+  res.json({
+    data: paginatedUsers,
+    pagination: {
+      page,
+      limit,
+      total: users.length,
+      totalPages: Math.ceil(users.length / limit)
+    }
+  });
 });
 
 router.get('/:id', (req, res) => {
@@ -39,7 +54,12 @@ router.post('/', (req, res) => {
     return res.status(409).json({ error: 'Email already exists' });
   }
   
-  const user = { id: nextId++, name: name.trim(), email: email.trim() };
+  const user = { 
+    id: nextId++, 
+    name: name.trim(), 
+    email: email.trim(),
+    createdAt: new Date().toISOString()
+  };
   users.push(user);
   res.status(201).json(user);
 });
