@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validateUser } = require('../utils/validation');
+const { sanitizeUserInput } = require('../utils/sanitize');
 
 let users = [];
 let nextId = 1;
@@ -43,11 +44,12 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const validation = validateUser(req.body);
+  const sanitized = sanitizeUserInput(req.body);
+  const validation = validateUser(sanitized);
   if (!validation.valid) {
     return res.status(400).json({ error: validation.error });
   }
-  const { name, email } = req.body;
+  const { name, email } = sanitized;
   
   // Check for duplicate email
   if (users.some(u => u.email === email.trim())) {
@@ -75,12 +77,13 @@ router.put('/:id', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
   
-  const validation = validateUser(req.body);
+  const sanitized = sanitizeUserInput(req.body);
+  const validation = validateUser(sanitized);
   if (!validation.valid) {
     return res.status(400).json({ error: validation.error });
   }
   
-  const { name, email } = req.body;
+  const { name, email } = sanitized;
   const trimmedEmail = email.trim();
   
   // Check for duplicate email (excluding current user)
