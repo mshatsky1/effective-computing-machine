@@ -92,7 +92,14 @@ router.put('/:id', (req, res) => {
     return res.status(409).json({ error: 'Email already exists' });
   }
   
-  users[index] = { id, name: name.trim(), email: trimmedEmail };
+  const existingUser = users[index];
+  users[index] = { 
+    ...existingUser,
+    id, 
+    name: name.trim(), 
+    email: trimmedEmail,
+    updatedAt: new Date().toISOString()
+  };
   res.json(users[index]);
 });
 
