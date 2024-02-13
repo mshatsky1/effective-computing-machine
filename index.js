@@ -4,11 +4,13 @@ const healthRoutes = require('./routes/health');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const requestLogger = require('./middleware/logger');
 const corsMiddleware = require('./middleware/cors');
+const rateLimiter = require('./middleware/rateLimiter');
 const config = require('./config');
 const app = express();
 const PORT = config.port;
 
 app.use(corsMiddleware);
+app.use(rateLimiter(60000, 100));
 app.use(requestLogger);
 app.use(express.json({ limit: '10mb' }));
 
