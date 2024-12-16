@@ -4,6 +4,14 @@ module.exports = {
   api: {
     version: 'v1',
     basePath: '/api'
+  },
+  rateLimit: {
+    windowMs: 60000,
+    maxRequests: 100
+  },
+  cors: {
+    origin: process.env.CORS_ORIGIN || '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
   }
 };
 
