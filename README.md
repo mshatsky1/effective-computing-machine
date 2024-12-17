@@ -45,3 +45,18 @@ npm run dev
 npm test
 ```
 
+## Linting
+
+```bash
+npm run lint
+npm run lint:fix
+```
+
+## Recent Updates (v0.3.0)
+
+- Added ESLint configuration
+- Added helper utilities for response formatting
+- Extended configuration with rate limit and CORS settings
+- Added validation utility tests
+- Improved code quality and maintainability
+
