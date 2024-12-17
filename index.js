@@ -10,7 +10,7 @@ const app = express();
 const PORT = config.port;
 
 app.use(corsMiddleware);
-app.use(rateLimiter(60000, 100));
+app.use(rateLimiter(config.rateLimit.windowMs, config.rateLimit.maxRequests));
 app.use(requestLogger);
 app.use(express.json({ limit: '10mb' }));
 
