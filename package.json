@@ -1,6 +1,6 @@
 {
   "name": "effective-computing-machine",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A REST API service for user management",
   "main": "index.js",
   "scripts": {
