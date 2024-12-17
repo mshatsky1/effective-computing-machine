@@ -5,4 +5,8 @@ node_modules/
 .DS_Store
 coverage/
 .nyc_output
+.vscode/
+.idea/
+*.swp
+*.swo
 
