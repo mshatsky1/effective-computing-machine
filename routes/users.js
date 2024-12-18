@@ -15,18 +15,29 @@ function resetUsers() {
 router.get('/', (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
+  const search = req.query.search ? req.query.search.toLowerCase() : '';
+  
+  let filteredUsers = users;
+  
+  // Apply search filter if provided
+  if (search) {
+    filteredUsers = users.filter(user => 
+      user.name.toLowerCase().includes(search) ||
+      user.email.toLowerCase().includes(search)
+    );
+  }
+  
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-  
-  const paginatedUsers = users.slice(startIndex, endIndex);
+  const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
   
   res.json({
     data: paginatedUsers,
     pagination: {
       page,
       limit,
-      total: users.length,
-      totalPages: Math.ceil(users.length / limit)
+      total: filteredUsers.length,
+      totalPages: Math.ceil(filteredUsers.length / limit)
     }
   });
 });
