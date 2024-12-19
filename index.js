@@ -19,7 +19,11 @@ app.use(express.json({ limit: '10mb' }));
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Welcome to Effective Computing Machine API',
-    version: '0.2.0'
+    version: '0.3.0',
+    endpoints: {
+      health: '/health',
+      users: '/api/users'
+    }
   });
 });
 
