@@ -5,7 +5,7 @@ A simple REST API for user management built with Express.js.
 ## Features
 
 - Create users (POST /api/users)
-- Get all users with pagination (GET /api/users?page=1&limit=10)
+- Get all users with pagination and search (GET /api/users?page=1&limit=10&search=term)
 - Get user by ID (GET /api/users/:id)
 - Update user (PUT /api/users/:id)
 - Delete users (DELETE /api/users/:id)
@@ -13,11 +13,12 @@ A simple REST API for user management built with Express.js.
 - Email validation
 - Input sanitization
 - Duplicate email prevention
-- Request logging
+- Request logging with request ID tracking
 - Rate limiting
 - CORS support
 - Error handling
 - Timestamps (createdAt, updatedAt)
+- Request ID middleware for tracing
 
 ## Installation
 
