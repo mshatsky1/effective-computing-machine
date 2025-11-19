@@ -20,38 +20,94 @@ A simple REST API for user management built with Express.js.
 - Timestamps (createdAt, updatedAt)
 - Request ID middleware for tracing
 
-## Installation
+## Getting Started
+
+### Installation
 
 ```bash
 npm install
+cp env.example .env
 ```
 
-## Usage
+### Environment Variables
+
+| Name | Description | Default |
+| --- | --- | --- |
+| `PORT` | HTTP port used by the Express server | `3000` |
+| `NODE_ENV` | Runtime environment flag (`development`, `test`, `production`) | `development` |
+| `CORS_ORIGIN` | Allowed origin(s) for CORS | `*` |
+| `RATE_LIMIT_WINDOW_MS` | Rate limit window in milliseconds | `60000` |
+| `RATE_LIMIT_MAX_REQUESTS` | Maximum requests allowed per window | `100` |
+| `REQUEST_BODY_LIMIT` | Maximum JSON payload size | `10mb` |
+
+### Running Locally
 
 ```bash
+# Start the API
 npm start
-```
 
-The server will run on port 3000 by default (configurable via PORT environment variable).
-
-## Development
-
-```bash
+# Development mode with auto-reload
 npm run dev
 ```
 
-## Testing
+The server listens on `http://localhost:3000` by default. Visit `/` for service metadata and `/health` for a health report.
+
+### Project Scripts
 
 ```bash
-npm test
+npm run lint        # Static analysis
+npm run lint:fix    # Auto-fix lint issues
+npm test            # Run Jest test suite
 ```
 
-## Linting
+## API Reference
 
-```bash
-npm run lint
-npm run lint:fix
+### Users
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/users` | List users with pagination, searching, and filtering |
+| `GET` | `/api/users/:id` | Retrieve a single user |
+| `POST` | `/api/users` | Create a user |
+| `PUT` | `/api/users/:id` | Update an existing user |
+| `DELETE` | `/api/users/:id` | Remove a user |
+
+#### Listing users
+
 ```
+GET /api/users?page=1&limit=20&search=doe&role=admin&status=active
+```
+
+Response:
+
+```json
+{
+  "data": [],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 0,
+    "totalPages": 1
+  },
+  "filters": {
+    "search": "doe",
+    "role": "admin",
+    "status": "active"
+  }
+}
+```
+
+### Health
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/health` | Liveness check with uptime details |
+
+## Development Tips
+
+- Use the included request logging (with `X-Request-ID`) to trace requests end-to-end.
+- Rate limiting and CORS settings can be adjusted via environment variables for different environments.
+- Tests rely on Jest with Supertest, making it easy to expand coverage with additional API scenarios.
 
 ## Recent Updates (v0.3.0)
 
