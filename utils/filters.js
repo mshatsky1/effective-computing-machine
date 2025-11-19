@@ -54,10 +54,31 @@ function filterUsers(users, { search, role, status, createdAfter, createdBefore,
   });
 }
 
+function sortUsers(users, sortField = 'createdAt', direction = 'desc') {
+  const multiplier = direction === 'asc' ? 1 : -1;
+  return [...users].sort((a, b) => {
+    const left = a[sortField];
+    const right = b[sortField];
+
+    if (!left && !right) return 0;
+    if (!left) return 1 * multiplier;
+    if (!right) return -1 * multiplier;
+
+    if (sortField === 'name') {
+      return left.localeCompare(right) * multiplier;
+    }
+
+    const leftTime = new Date(left).getTime();
+    const rightTime = new Date(right).getTime();
+    return (leftTime - rightTime) * multiplier;
+  });
+}
+
 module.exports = {
   filterUsers,
   isValidRole,
   isValidStatus,
-  normalize
+  normalize,
+  sortUsers
 };
 

@@ -109,6 +109,8 @@ Available query parameters:
 - `role`, `status` — exact matches based on allowed enums
 - `createdAfter`, `createdBefore` — ISO timestamps bounding `createdAt`
 - `updatedAfter`, `updatedBefore` — ISO timestamps bounding `updatedAt`
+- `sort` — one of `createdAt`, `updatedAt`, `name`
+- `direction` — `asc` or `desc` (defaults to `desc`)
 
 ### Health
 

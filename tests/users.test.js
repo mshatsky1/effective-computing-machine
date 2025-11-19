@@ -43,6 +43,17 @@ describe('User API', () => {
     expect(res.body.data[0].email).toBe('ben@acme.io');
   });
 
+  test('GET /api/users validates sort parameters', async () => {
+    const invalid = await request(app).get('/api/users?sort=unknown');
+    expect(invalid.statusCode).toBe(400);
+
+    const sorted = await request(app).get('/api/users?sort=name&direction=asc');
+    expect(sorted.statusCode).toBe(200);
+    expect(sorted.body.data[0].name).toBe('Alice Carter');
+    expect(sorted.body.filters.sort).toBe('name');
+    expect(sorted.body.filters.direction).toBe('asc');
+  });
+
   test('GET /api/users rejects invalid date filters', async () => {
     const res = await request(app).get('/api/users?createdAfter=not-a-date');
     expect(res.statusCode).toBe(400);

@@ -4,8 +4,15 @@ const { validateUser } = require('../utils/validation');
 const { sanitizeUserInput } = require('../utils/sanitize');
 const { paginate } = require('../utils/pagination');
 const { USER_ROLES, USER_STATUS } = require('../utils/constants');
-const { filterUsers, isValidRole, isValidStatus, normalize } = require('../utils/filters');
+const { filterUsers, isValidRole, isValidStatus, normalize, sortUsers } = require('../utils/filters');
 const userStore = require('../data/userStore');
+
+const SORT_FIELDS = {
+  createdat: 'createdAt',
+  updatedat: 'updatedAt',
+  name: 'name'
+};
+const SORT_DIRECTIONS = new Set(['asc', 'desc']);
 
 function parseDateParam(value, label) {
   if (!value) return null;
@@ -28,6 +35,8 @@ router.get('/', (req, res) => {
   let createdBefore;
   let updatedAfter;
   let updatedBefore;
+  const requestedSort = (req.query.sort || 'createdAt').toString().trim().toLowerCase();
+  const direction = (req.query.direction || 'desc').toString().trim().toLowerCase();
 
   try {
     createdAfter = parseDateParam(req.query.createdAfter, 'createdAfter');
@@ -36,6 +45,15 @@ router.get('/', (req, res) => {
     updatedBefore = parseDateParam(req.query.updatedBefore, 'updatedBefore');
   } catch (err) {
     return res.status(err.statusCode || 400).json({ error: err.message });
+  }
+
+  const sortField = SORT_FIELDS[requestedSort];
+  if (!sortField) {
+    return res.status(400).json({ error: 'Invalid sort field' });
+  }
+
+  if (!SORT_DIRECTIONS.has(direction)) {
+    return res.status(400).json({ error: 'Invalid sort direction' });
   }
 
   if (role && !isValidRole(role)) {
@@ -48,8 +66,9 @@ router.get('/', (req, res) => {
   
   const allUsers = userStore.list();
   const filteredUsers = filterUsers(allUsers, { search, role, status, createdAfter, createdBefore, updatedAfter, updatedBefore });
-  
-  const result = paginate(filteredUsers, { page, limit });
+  const orderedUsers = sortUsers(filteredUsers, sortField, direction);
+
+  const result = paginate(orderedUsers, { page, limit });
   
   res.json({
     ...result,
@@ -60,7 +79,9 @@ router.get('/', (req, res) => {
       createdAfter: createdAfter ? createdAfter.toISOString() : null,
       createdBefore: createdBefore ? createdBefore.toISOString() : null,
       updatedAfter: updatedAfter ? updatedAfter.toISOString() : null,
-      updatedBefore: updatedBefore ? updatedBefore.toISOString() : null
+      updatedBefore: updatedBefore ? updatedBefore.toISOString() : null,
+      sort: sortField,
+      direction
     }
   });
 });
