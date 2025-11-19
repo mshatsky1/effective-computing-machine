@@ -2,26 +2,19 @@ const express = require('express');
 const router = express.Router();
 const { validateUser } = require('../utils/validation');
 const { sanitizeUserInput } = require('../utils/sanitize');
-
-let users = [];
-let nextId = 1;
-
-// Helper function to reset users (for testing)
-function resetUsers() {
-  users = [];
-  nextId = 1;
-}
+const userStore = require('../data/userStore');
 
 router.get('/', (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const search = req.query.search ? req.query.search.toLowerCase() : '';
   
-  let filteredUsers = users;
+  const allUsers = userStore.list();
+  let filteredUsers = allUsers;
   
   // Apply search filter if provided
   if (search) {
-    filteredUsers = users.filter(user => 
+    filteredUsers = allUsers.filter(user => 
       user.name.toLowerCase().includes(search) ||
       user.email.toLowerCase().includes(search)
     );
@@ -47,7 +40,7 @@ router.get('/:id', (req, res) => {
   if (isNaN(id)) {
     return res.status(400).json({ error: 'Invalid user ID' });
   }
-  const user = users.find(u => u.id === id);
+  const user = userStore.findById(id);
   if (!user) {
     return res.status(404).json({ error: 'User not found' });
   }
@@ -63,17 +56,11 @@ router.post('/', (req, res) => {
   const { name, email } = sanitized;
   
   // Check for duplicate email
-  if (users.some(u => u.email === email.trim())) {
+  if (userStore.existsByEmail(email)) {
     return res.status(409).json({ error: 'Email already exists' });
   }
   
-  const user = { 
-    id: nextId++, 
-    name: name.trim(), 
-    email: email.trim(),
-    createdAt: new Date().toISOString()
-  };
-  users.push(user);
+  const user = userStore.create({ name, email });
   res.status(201).json(user);
 });
 
@@ -83,11 +70,11 @@ router.put('/:id', (req, res) => {
     return res.status(400).json({ error: 'Invalid user ID' });
   }
   
-  const index = users.findIndex(u => u.id === id);
-  if (index === -1) {
+  const existingUser = userStore.findById(id);
+  if (!existingUser) {
     return res.status(404).json({ error: 'User not found' });
   }
-  
+
   const sanitized = sanitizeUserInput(req.body);
   const validation = validateUser(sanitized);
   if (!validation.valid) {
@@ -98,20 +85,12 @@ router.put('/:id', (req, res) => {
   const trimmedEmail = email.trim();
   
   // Check for duplicate email (excluding current user)
-  const duplicateUser = users.find(u => u.email === trimmedEmail && u.id !== id);
-  if (duplicateUser) {
+  if (userStore.existsByEmail(trimmedEmail, id)) {
     return res.status(409).json({ error: 'Email already exists' });
   }
   
-  const existingUser = users[index];
-  users[index] = { 
-    ...existingUser,
-    id, 
-    name: name.trim(), 
-    email: trimmedEmail,
-    updatedAt: new Date().toISOString()
-  };
-  res.json(users[index]);
+  const updatedUser = userStore.update(id, { name, email: trimmedEmail });
+  res.json(updatedUser);
 });
 
 router.delete('/:id', (req, res) => {
@@ -119,17 +98,16 @@ router.delete('/:id', (req, res) => {
   if (isNaN(id)) {
     return res.status(400).json({ error: 'Invalid user ID' });
   }
-  const index = users.findIndex(u => u.id === id);
-  if (index === -1) {
+  const removed = userStore.remove(id);
+  if (!removed) {
     return res.status(404).json({ error: 'User not found' });
   }
-  users.splice(index, 1);
   res.status(204).send();
 });
 
 // Export reset function for testing
 if (process.env.NODE_ENV === 'test') {
-  router.resetUsers = resetUsers;
+  router.resetUsers = userStore.reset;
 }
 
 module.exports = router;
