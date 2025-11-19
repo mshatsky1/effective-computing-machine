@@ -72,6 +72,7 @@ npm test            # Run Jest test suite
 | --- | --- | --- |
 | `GET` | `/api/users` | List users with pagination, searching, and filtering |
 | `GET` | `/api/users/:id` | Retrieve a single user |
+| `GET` | `/api/users/summary` | Aggregated counts by role and status |
 | `POST` | `/api/users` | Create a user |
 | `PUT` | `/api/users/:id` | Update an existing user |
 | `DELETE` | `/api/users/:id` | Remove a user |

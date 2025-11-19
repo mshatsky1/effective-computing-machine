@@ -37,6 +37,17 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/summary', (req, res) => {
+  const allUsers = userStore.list();
+  const summary = allUsers.reduce((acc, user) => {
+    acc.byStatus[user.status] = (acc.byStatus[user.status] || 0) + 1;
+    acc.byRole[user.role] = (acc.byRole[user.role] || 0) + 1;
+    return acc;
+  }, { total: allUsers.length, byStatus: {}, byRole: {} });
+
+  res.json(summary);
+});
+
 router.get('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
