@@ -14,12 +14,12 @@ app.use(requestId);
 app.use(corsMiddleware);
 app.use(rateLimiter(config.rateLimit.windowMs, config.rateLimit.maxRequests));
 app.use(requestLogger);
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: config.request.bodyLimit }));
 
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Welcome to Effective Computing Machine API',
-    version: '0.3.0',
+    version: config.api.serviceVersion,
     endpoints: {
       health: '/health',
       users: '/api/users'
