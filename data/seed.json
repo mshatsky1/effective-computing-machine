@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Carter",
+    "email": "alice@example.com",
+    "role": "admin",
+    "status": "active",
+    "createdAt": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Ben Wright",
+    "email": "ben@example.com",
+    "role": "member",
+    "status": "active",
+    "createdAt": "2024-02-20T12:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Chloe Ramirez",
+    "email": "chloe@example.com",
+    "role": "member",
+    "status": "inactive",
+    "createdAt": "2024-03-05T08:15:00.000Z",
+    "updatedAt": "2024-08-10T09:45:00.000Z"
+  }
+]
+

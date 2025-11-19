@@ -1,5 +1,32 @@
+const fs = require('fs');
+const path = require('path');
+
 let users = [];
 let nextId = 1;
+
+function loadSeedData() {
+  const seedPath = path.join(__dirname, 'seed.json');
+  if (!fs.existsSync(seedPath)) {
+    return;
+  }
+
+  try {
+    const raw = fs.readFileSync(seedPath, 'utf-8');
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      return;
+    }
+    users = parsed.map(entry => ({
+      ...entry,
+      id: entry.id || nextId++,
+      createdAt: entry.createdAt || new Date().toISOString()
+    }));
+    const highestId = users.reduce((max, user) => Math.max(max, user.id), 0);
+    nextId = highestId + 1;
+  } catch (error) {
+    console.warn('Failed to load seed data:', error.message);
+  }
+}
 
 function normalizeEnum(value, fallback) {
   return (value || fallback).toString().trim().toLowerCase();
@@ -68,6 +95,8 @@ function reset() {
   nextId = 1;
 }
 
+loadSeedData();
+
 module.exports = {
   list,
   findById,
@@ -75,6 +104,7 @@ module.exports = {
   create,
   update,
   remove,
-  reset
+  reset,
+  loadSeedData
 };
 

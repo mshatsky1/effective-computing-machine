@@ -123,6 +123,7 @@ Available query parameters:
 - Use the included request logging (with `X-Request-ID`) to trace requests end-to-end.
 - Rate limiting and CORS settings can be adjusted via environment variables for different environments.
 - Tests rely on Jest with Supertest, making it easy to expand coverage with additional API scenarios.
+- Sample records live in `data/seed.json`; modify this file to pre-load users whenever the service starts.
 
 ## Recent Updates (v0.3.0)
 
