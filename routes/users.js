@@ -97,6 +97,17 @@ router.get('/summary', (req, res) => {
   res.json(summary);
 });
 
+router.get('/export', (req, res) => {
+  const allUsers = userStore.list();
+  const header = ['id', 'name', 'email', 'role', 'status', 'createdAt', 'updatedAt'];
+  const rows = allUsers.map(user => header.map(field => `"${(user[field] ?? '').toString().replace(/"/g, '""')}"`).join(','));
+  const body = [header.join(','), ...rows].join('\n');
+
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename="users.csv"');
+  res.send(body);
+});
+
 router.get('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {

@@ -107,5 +107,12 @@ describe('User API', () => {
     expect(res.body.byRole.admin).toBe(1);
     expect(res.body.byStatus.inactive).toBe(1);
   });
+
+  test('GET /api/users/export emits CSV data', async () => {
+    const res = await request(app).get('/api/users/export');
+    expect(res.statusCode).toBe(200);
+    expect(res.headers['content-type']).toMatch(/text\/csv/);
+    expect(res.text).toContain('id,name,email,role,status,createdAt,updatedAt');
+  });
 });
 
