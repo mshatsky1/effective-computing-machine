@@ -6,11 +6,13 @@ const requestLogger = require('./middleware/logger');
 const requestId = require('./middleware/requestId');
 const corsMiddleware = require('./middleware/cors');
 const rateLimiter = require('./middleware/rateLimiter');
+const securityHeaders = require('./middleware/securityHeaders');
 const config = require('./config');
 const app = express();
 const PORT = config.port;
 
 app.use(requestId);
+app.use(securityHeaders);
 app.use(corsMiddleware);
 app.use(rateLimiter(config.rateLimit.windowMs, config.rateLimit.maxRequests));
 app.use(requestLogger);
