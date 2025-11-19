@@ -4,27 +4,37 @@ const { validateUser } = require('../utils/validation');
 const { sanitizeUserInput } = require('../utils/sanitize');
 const { paginate } = require('../utils/pagination');
 const { USER_ROLES, USER_STATUS } = require('../utils/constants');
+const { filterUsers, isValidRole, isValidStatus, normalize } = require('../utils/filters');
 const userStore = require('../data/userStore');
 
 router.get('/', (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const search = req.query.search ? req.query.search.toLowerCase() : '';
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const search = req.query.search ? req.query.search.trim() : '';
+  const role = normalize(req.query.role);
+  const status = normalize(req.query.status);
+
+  if (role && !isValidRole(role)) {
+    return res.status(400).json({ error: 'Invalid role filter' });
+  }
+
+  if (status && !isValidStatus(status)) {
+    return res.status(400).json({ error: 'Invalid status filter' });
+  }
   
   const allUsers = userStore.list();
-  let filteredUsers = allUsers;
-  
-  // Apply search filter if provided
-  if (search) {
-    filteredUsers = allUsers.filter(user => 
-      user.name.toLowerCase().includes(search) ||
-      user.email.toLowerCase().includes(search)
-    );
-  }
+  const filteredUsers = filterUsers(allUsers, { search, role, status });
   
   const result = paginate(filteredUsers, { page, limit });
   
-  res.json(result);
+  res.json({
+    ...result,
+    filters: {
+      search: search || null,
+      role: role || null,
+      status: status || null
+    }
+  });
 });
 
 router.get('/:id', (req, res) => {
