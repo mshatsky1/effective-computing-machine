@@ -13,7 +13,7 @@ function isValidStatus(status) {
   return Object.values(USER_STATUS).includes(status);
 }
 
-function filterUsers(users, { search, role, status }) {
+function filterUsers(users, { search, role, status, createdAfter, createdBefore, updatedAfter, updatedBefore }) {
   const normalizedSearch = normalize(search);
   const normalizedRole = normalize(role);
   const normalizedStatus = normalize(status);
@@ -32,6 +32,22 @@ function filterUsers(users, { search, role, status }) {
 
     if (normalizedStatus && matches) {
       matches = user.status === normalizedStatus;
+    }
+
+    if (createdAfter && matches) {
+      matches = new Date(user.createdAt) >= createdAfter;
+    }
+
+    if (createdBefore && matches) {
+      matches = new Date(user.createdAt) <= createdBefore;
+    }
+
+    if (updatedAfter && matches && user.updatedAt) {
+      matches = new Date(user.updatedAt) >= updatedAfter;
+    }
+
+    if (updatedBefore && matches && user.updatedAt) {
+      matches = new Date(user.updatedAt) <= updatedBefore;
     }
 
     return matches;

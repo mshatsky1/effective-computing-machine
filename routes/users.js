@@ -7,12 +7,36 @@ const { USER_ROLES, USER_STATUS } = require('../utils/constants');
 const { filterUsers, isValidRole, isValidStatus, normalize } = require('../utils/filters');
 const userStore = require('../data/userStore');
 
+function parseDateParam(value, label) {
+  if (!value) return null;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    const error = new Error(`Invalid ${label} date format`);
+    error.statusCode = 400;
+    throw error;
+  }
+  return parsed;
+}
+
 router.get('/', (req, res) => {
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 10;
   const search = req.query.search ? req.query.search.trim() : '';
   const role = normalize(req.query.role);
   const status = normalize(req.query.status);
+  let createdAfter;
+  let createdBefore;
+  let updatedAfter;
+  let updatedBefore;
+
+  try {
+    createdAfter = parseDateParam(req.query.createdAfter, 'createdAfter');
+    createdBefore = parseDateParam(req.query.createdBefore, 'createdBefore');
+    updatedAfter = parseDateParam(req.query.updatedAfter, 'updatedAfter');
+    updatedBefore = parseDateParam(req.query.updatedBefore, 'updatedBefore');
+  } catch (err) {
+    return res.status(err.statusCode || 400).json({ error: err.message });
+  }
 
   if (role && !isValidRole(role)) {
     return res.status(400).json({ error: 'Invalid role filter' });
@@ -23,7 +47,7 @@ router.get('/', (req, res) => {
   }
   
   const allUsers = userStore.list();
-  const filteredUsers = filterUsers(allUsers, { search, role, status });
+  const filteredUsers = filterUsers(allUsers, { search, role, status, createdAfter, createdBefore, updatedAfter, updatedBefore });
   
   const result = paginate(filteredUsers, { page, limit });
   
@@ -32,7 +56,11 @@ router.get('/', (req, res) => {
     filters: {
       search: search || null,
       role: role || null,
-      status: status || null
+      status: status || null,
+      createdAfter: createdAfter ? createdAfter.toISOString() : null,
+      createdBefore: createdBefore ? createdBefore.toISOString() : null,
+      updatedAfter: updatedAfter ? updatedAfter.toISOString() : null,
+      updatedBefore: updatedBefore ? updatedBefore.toISOString() : null
     }
   });
 });

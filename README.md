@@ -102,6 +102,14 @@ Response:
 }
 ```
 
+Available query parameters:
+
+- `page`, `limit` — pagination controls
+- `search` — matches name or email (case-insensitive)
+- `role`, `status` — exact matches based on allowed enums
+- `createdAfter`, `createdBefore` — ISO timestamps bounding `createdAt`
+- `updatedAfter`, `updatedBefore` — ISO timestamps bounding `updatedAt`
+
 ### Health
 
 | Method | Endpoint | Description |
