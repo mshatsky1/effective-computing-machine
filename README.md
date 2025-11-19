@@ -39,6 +39,10 @@ cp env.example .env
 | `RATE_LIMIT_WINDOW_MS` | Rate limit window in milliseconds | `60000` |
 | `RATE_LIMIT_MAX_REQUESTS` | Maximum requests allowed per window | `100` |
 | `REQUEST_BODY_LIMIT` | Maximum JSON payload size | `10mb` |
+| `MAINTENANCE_MODE` | Enable maintenance mode responses | `false` |
+| `MAINTENANCE_MESSAGE` | Message returned during maintenance | `Service temporarily unavailable` |
+| `MAINTENANCE_ALLOW_HEALTH` | Allow health endpoints while in maintenance | `true` |
+| `MAINTENANCE_RETRY_AFTER` | Retry-After hint (seconds) | `60` |
 
 ### Running Locally
 

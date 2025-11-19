@@ -7,12 +7,14 @@ const requestId = require('./middleware/requestId');
 const corsMiddleware = require('./middleware/cors');
 const rateLimiter = require('./middleware/rateLimiter');
 const securityHeaders = require('./middleware/securityHeaders');
+const maintenanceMode = require('./middleware/maintenanceMode');
 const config = require('./config');
 const app = express();
 const PORT = config.port;
 
 app.use(requestId);
 app.use(securityHeaders);
+app.use(maintenanceMode(config.maintenance));
 app.use(corsMiddleware);
 app.use(rateLimiter(config.rateLimit.windowMs, config.rateLimit.maxRequests));
 app.use(requestLogger);

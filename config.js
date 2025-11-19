@@ -25,6 +25,12 @@ module.exports = {
   },
   request: {
     bodyLimit: process.env.REQUEST_BODY_LIMIT || '10mb'
+  },
+  maintenance: {
+    enabled: process.env.MAINTENANCE_MODE === 'true',
+    message: process.env.MAINTENANCE_MESSAGE || 'Service is temporarily undergoing maintenance',
+    allowHealth: process.env.MAINTENANCE_ALLOW_HEALTH !== 'false',
+    retryAfterSeconds: Number(process.env.MAINTENANCE_RETRY_AFTER) || 60
   }
 };
 
