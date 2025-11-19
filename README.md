@@ -105,7 +105,9 @@ Response:
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
-| `GET` | `/health` | Liveness check with uptime details |
+| `GET` | `/health` | Basic status payload with uptime and metadata |
+| `GET` | `/health/live` | Minimal liveness probe |
+| `GET` | `/health/ready` | Readiness probe that surfaces dependency info |
 
 ## Development Tips
 
