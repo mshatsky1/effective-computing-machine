@@ -17,5 +17,15 @@ const ERROR_MESSAGES = {
   VALIDATION_ERROR: 'Validation error'
 };
 
-module.exports = { HTTP_STATUS, ERROR_MESSAGES };
+const USER_STATUS = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive'
+};
+
+const USER_ROLES = {
+  MEMBER: 'member',
+  ADMIN: 'admin'
+};
+
+module.exports = { HTTP_STATUS, ERROR_MESSAGES, USER_STATUS, USER_ROLES };
 

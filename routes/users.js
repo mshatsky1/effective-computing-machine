@@ -3,6 +3,7 @@ const router = express.Router();
 const { validateUser } = require('../utils/validation');
 const { sanitizeUserInput } = require('../utils/sanitize');
 const { paginate } = require('../utils/pagination');
+const { USER_ROLES, USER_STATUS } = require('../utils/constants');
 const userStore = require('../data/userStore');
 
 router.get('/', (req, res) => {
@@ -40,18 +41,23 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const sanitized = sanitizeUserInput(req.body);
-  const validation = validateUser(sanitized);
+  const payload = {
+    ...sanitized,
+    role: (sanitized.role || USER_ROLES.MEMBER).toLowerCase(),
+    status: (sanitized.status || USER_STATUS.ACTIVE).toLowerCase()
+  };
+  const validation = validateUser(payload);
   if (!validation.valid) {
     return res.status(400).json({ error: validation.error });
   }
-  const { name, email } = sanitized;
+  const { name, email, role, status } = payload;
   
   // Check for duplicate email
   if (userStore.existsByEmail(email)) {
     return res.status(409).json({ error: 'Email already exists' });
   }
   
-  const user = userStore.create({ name, email });
+  const user = userStore.create({ name, email, role, status });
   res.status(201).json(user);
 });
 
@@ -67,12 +73,17 @@ router.put('/:id', (req, res) => {
   }
 
   const sanitized = sanitizeUserInput(req.body);
-  const validation = validateUser(sanitized);
+  const payload = {
+    ...sanitized,
+    role: (sanitized.role || existingUser.role || USER_ROLES.MEMBER).toLowerCase(),
+    status: (sanitized.status || existingUser.status || USER_STATUS.ACTIVE).toLowerCase()
+  };
+  const validation = validateUser(payload);
   if (!validation.valid) {
     return res.status(400).json({ error: validation.error });
   }
   
-  const { name, email } = sanitized;
+  const { name, email, role, status } = payload;
   const trimmedEmail = email.trim();
   
   // Check for duplicate email (excluding current user)
@@ -80,7 +91,7 @@ router.put('/:id', (req, res) => {
     return res.status(409).json({ error: 'Email already exists' });
   }
   
-  const updatedUser = userStore.update(id, { name, email: trimmedEmail });
+  const updatedUser = userStore.update(id, { name, email: trimmedEmail, role, status });
   res.json(updatedUser);
 });
 

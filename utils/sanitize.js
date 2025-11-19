@@ -5,10 +5,17 @@ function sanitizeString(str) {
     .trim();
 }
 
-function sanitizeUserInput(user) {
+function sanitizeOptionalString(str) {
+  if (typeof str === 'undefined' || str === null) return undefined;
+  return sanitizeString(str);
+}
+
+function sanitizeUserInput(user = {}) {
   return {
     name: sanitizeString(user.name),
-    email: sanitizeString(user.email)
+    email: sanitizeString(user.email),
+    role: sanitizeOptionalString(user.role),
+    status: sanitizeOptionalString(user.status)
   };
 }
 

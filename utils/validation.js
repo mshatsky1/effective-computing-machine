@@ -1,3 +1,5 @@
+const { USER_ROLES, USER_STATUS } = require('./constants');
+
 function validateEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -12,6 +14,12 @@ function validateUser(user) {
   }
   if (!user.email || typeof user.email !== 'string' || !validateEmail(user.email)) {
     return { valid: false, error: 'Invalid email format' };
+  }
+  if (user.role && !Object.values(USER_ROLES).includes(user.role)) {
+    return { valid: false, error: `Role must be one of: ${Object.values(USER_ROLES).join(', ')}` };
+  }
+  if (user.status && !Object.values(USER_STATUS).includes(user.status)) {
+    return { valid: false, error: `Status must be one of: ${Object.values(USER_STATUS).join(', ')}` };
   }
   return { valid: true };
 }
