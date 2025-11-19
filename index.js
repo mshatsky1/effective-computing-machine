@@ -18,8 +18,10 @@ app.use(express.json({ limit: config.request.bodyLimit }));
 
 app.get('/', (req, res) => {
   res.json({ 
-    message: 'Welcome to Effective Computing Machine API',
-    version: config.api.serviceVersion,
+    message: `Welcome to ${config.service.name}`,
+    description: config.service.description,
+    version: config.service.version,
+    environment: config.nodeEnv,
     endpoints: {
       health: '/health',
       users: '/api/users'

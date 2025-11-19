@@ -9,6 +9,12 @@ module.exports = {
     basePath: '/api',
     serviceVersion: version
   },
+  service: {
+    name: 'Effective Computing Machine API',
+    description: 'A REST API service for managing users',
+    owner: 'Platform Team',
+    version
+  },
   rateLimit: {
     windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS) || 60000,
     maxRequests: Number(process.env.RATE_LIMIT_MAX_REQUESTS) || 100
