@@ -2,8 +2,10 @@ const request = require('supertest');
 const express = require('express');
 const userRoutes = require('../routes/users');
 const userStore = require('../data/userStore');
+const requireJson = require('../middleware/requireJson');
 
 const app = express();
+app.use(requireJson);
 app.use(express.json());
 app.use('/api/users', userRoutes);
 
@@ -66,6 +68,14 @@ describe('User API', () => {
     expect(created.statusCode).toBe(201);
     const duplicate = await request(app).post('/api/users').send(payload);
     expect(duplicate.statusCode).toBe(409);
+  });
+
+  test('POST /api/users enforces JSON content type', async () => {
+    const res = await request(app)
+      .post('/api/users')
+      .set('Content-Type', 'text/plain')
+      .send('invalid');
+    expect(res.statusCode).toBe(415);
   });
 
   test('PUT /api/users/:id updates record and enforces unique email', async () => {

@@ -9,6 +9,7 @@ const rateLimiter = require('./middleware/rateLimiter');
 const securityHeaders = require('./middleware/securityHeaders');
 const maintenanceMode = require('./middleware/maintenanceMode');
 const responseTime = require('./middleware/responseTime');
+const requireJson = require('./middleware/requireJson');
 const config = require('./config');
 const app = express();
 const PORT = config.port;
@@ -20,6 +21,7 @@ app.use(maintenanceMode(config.maintenance));
 app.use(corsMiddleware);
 app.use(rateLimiter(config.rateLimit.windowMs, config.rateLimit.maxRequests));
 app.use(requestLogger);
+app.use(requireJson);
 app.use(express.json({ limit: config.request.bodyLimit }));
 
 app.get('/', (req, res) => {
