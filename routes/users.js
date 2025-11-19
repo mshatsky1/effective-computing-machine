@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { validateUser } = require('../utils/validation');
 const { sanitizeUserInput } = require('../utils/sanitize');
+const { paginate } = require('../utils/pagination');
 const userStore = require('../data/userStore');
 
 router.get('/', (req, res) => {
@@ -20,19 +21,9 @@ router.get('/', (req, res) => {
     );
   }
   
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-  const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
+  const result = paginate(filteredUsers, { page, limit });
   
-  res.json({
-    data: paginatedUsers,
-    pagination: {
-      page,
-      limit,
-      total: filteredUsers.length,
-      totalPages: Math.ceil(filteredUsers.length / limit)
-    }
-  });
+  res.json(result);
 });
 
 router.get('/:id', (req, res) => {
