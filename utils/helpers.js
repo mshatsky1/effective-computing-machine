@@ -1,3 +1,9 @@
+/**
+ * Formats a successful API response
+ * @param {*} data - The response data
+ * @param {string|null} message - Optional success message
+ * @returns {Object} Formatted response object
+ */
 function formatResponse(data, message = null) {
   const response = { success: true, data };
   if (message) {
