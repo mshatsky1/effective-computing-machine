@@ -1,5 +1,10 @@
 const { USER_ROLES, USER_STATUS } = require('./constants');
 
+/**
+ * Normalizes a string value by trimming and converting to lowercase
+ * @param {*} value - Value to normalize
+ * @returns {string|undefined} Normalized string or undefined if value is falsy
+ */
 function normalize(value) {
   if (!value) return undefined;
   return value.toString().trim().toLowerCase();
