@@ -1,3 +1,11 @@
+/**
+ * Paginates an array of items
+ * @param {Array} items - Array of items to paginate
+ * @param {Object} options - Pagination options
+ * @param {number} options.page - Page number (default: 1)
+ * @param {number} options.limit - Items per page (default: 10)
+ * @returns {Object} Paginated result with data and pagination metadata
+ */
 function paginate(items, { page = 1, limit = 10 } = {}) {
   const safePage = page < 1 ? 1 : page;
   const safeLimit = limit < 1 ? 10 : limit;
