@@ -13,6 +13,12 @@ function isValidStatus(status) {
   return Object.values(USER_STATUS).includes(status);
 }
 
+/**
+ * Filters users based on various criteria
+ * @param {Array} users - Array of user objects to filter
+ * @param {Object} filters - Filter criteria
+ * @returns {Array} Filtered array of users
+ */
 function filterUsers(users, { search, role, status, createdAfter, createdBefore, updatedAfter, updatedBefore }) {
   const normalizedSearch = normalize(search);
   const normalizedRole = normalize(role);
