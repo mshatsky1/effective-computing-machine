@@ -1,3 +1,7 @@
+/**
+ * Middleware to log HTTP requests with timing and metadata
+ * Logs request details when response finishes
+ */
 function requestLogger(req, res, next) {
   const start = process.hrtime.bigint();
   const requestId = req.id || 'unknown';
