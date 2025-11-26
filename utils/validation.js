@@ -1,5 +1,10 @@
 const { USER_ROLES, USER_STATUS } = require('./constants');
 
+/**
+ * Validates an email address format
+ * @param {string} email - Email address to validate
+ * @returns {boolean} True if email format is valid
+ */
 function validateEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
