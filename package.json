@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
+  "keywords": ["api", "rest", "express", "user-management"],
   "author": "",
   "license": "ISC",
   "dependencies": {
