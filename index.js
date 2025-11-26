@@ -14,6 +14,7 @@ const config = require('./config');
 const app = express();
 const PORT = config.port;
 
+// Middleware order matters: request ID first, then security, then logging
 app.use(requestId);
 app.use(securityHeaders);
 app.use(responseTime);
