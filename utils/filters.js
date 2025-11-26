@@ -60,6 +60,13 @@ function filterUsers(users, { search, role, status, createdAfter, createdBefore,
   });
 }
 
+/**
+ * Sorts users by a specified field and direction
+ * @param {Array} users - Array of user objects to sort
+ * @param {string} sortField - Field to sort by (default: 'createdAt')
+ * @param {string} direction - Sort direction 'asc' or 'desc' (default: 'desc')
+ * @returns {Array} Sorted array of users
+ */
 function sortUsers(users, sortField = 'createdAt', direction = 'desc') {
   const multiplier = direction === 'asc' ? 1 : -1;
   return [...users].sort((a, b) => {
