@@ -1,8 +1,9 @@
 function errorHandler(err, req, res, next) {
   console.error('Error:', err.stack);
   const statusCode = err.statusCode || 500;
+  const errorMessage = err.message || 'An unexpected error occurred';
   res.status(statusCode).json({ 
-    error: err.message || 'Something went wrong!',
+    error: errorMessage,
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 }
