@@ -11,6 +11,9 @@ function validateEmail(email) {
 }
 
 function validateUser(user) {
+  if (!user || typeof user !== 'object') {
+    return { valid: false, error: 'User data is required' };
+  }
   if (!user.name || typeof user.name !== 'string' || user.name.trim().length === 0) {
     return { valid: false, error: 'Name cannot be empty' };
   }
