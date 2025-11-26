@@ -20,6 +20,10 @@ function formatError(message, code = null) {
   return error;
 }
 
+/**
+ * Generates a unique identifier using timestamp and random string
+ * @returns {string} Unique identifier
+ */
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
