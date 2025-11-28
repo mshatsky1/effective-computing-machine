@@ -131,6 +131,7 @@ Available query parameters:
 - Rate limiting and CORS settings can be adjusted via environment variables for different environments.
 - Tests rely on Jest with Supertest, making it easy to expand coverage with additional API scenarios.
 - Sample records live in `data/seed.json`; modify this file to pre-load users whenever the service starts.
+- See `CONTRIBUTING.md` for guidelines on proposing changes.
 
 ## Recent Updates (v0.3.0)
 
