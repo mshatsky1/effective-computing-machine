@@ -27,5 +27,7 @@ const USER_ROLES = {
   ADMIN: 'admin'
 };
 
-module.exports = { HTTP_STATUS, ERROR_MESSAGES, USER_STATUS, USER_ROLES };
+const LOG_LEVELS = ['info', 'silent'];
+
+module.exports = { HTTP_STATUS, ERROR_MESSAGES, USER_STATUS, USER_ROLES, LOG_LEVELS };
 
