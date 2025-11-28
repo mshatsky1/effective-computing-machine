@@ -1,0 +1,17 @@
+### Health check
+GET http://localhost:3000/health
+
+### List users
+GET http://localhost:3000/api/users
+
+### Create user
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "name": "Ada Lovelace",
+  "email": "ada@example.com",
+  "role": "admin",
+  "status": "active"
+}
+
