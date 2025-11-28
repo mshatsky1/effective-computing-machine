@@ -118,6 +118,8 @@ Available query parameters:
 - `sort` — one of `createdAt`, `updatedAt`, `name`
 - `direction` — `asc` or `desc` (defaults to `desc`)
 
+See `docs/sample-requests.http` for quick REST Client examples.
+
 ### Health
 
 | Method | Endpoint | Description |
