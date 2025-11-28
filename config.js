@@ -1,11 +1,10 @@
 require('dotenv').config();
 const { version } = require('./package.json');
-
-const LOG_LEVELS = new Set(['info', 'silent']);
+const { LOG_LEVELS } = require('./utils/constants');
 
 function resolveLogLevel(level) {
   const normalized = (level || 'info').toLowerCase();
-  if (LOG_LEVELS.has(normalized)) {
+  if (LOG_LEVELS.includes(normalized)) {
     return normalized;
   }
   return 'info';
