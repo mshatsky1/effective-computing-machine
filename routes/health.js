@@ -2,6 +2,10 @@ const express = require('express');
 const config = require('../config');
 const router = express.Router();
 
+/**
+ * Builds a health payload with base metadata and optional overrides.
+ * @param {Object} overrides Additional fields to merge into the payload
+ */
 function buildPayload(overrides = {}) {
   return {
     status: 'ok',
