@@ -1,3 +1,6 @@
+/**
+ * Applies a hardened set of HTTP response headers for basic security hygiene.
+ */
 function securityHeaders(req, res, next) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
