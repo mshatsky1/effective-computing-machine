@@ -1,6 +1,16 @@
 require('dotenv').config();
 const { version } = require('./package.json');
 
+const LOG_LEVELS = new Set(['info', 'silent']);
+
+function resolveLogLevel(level) {
+  const normalized = (level || 'info').toLowerCase();
+  if (LOG_LEVELS.has(normalized)) {
+    return normalized;
+  }
+  return 'info';
+}
+
 module.exports = {
   port: Number(process.env.PORT) || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -25,6 +35,9 @@ module.exports = {
   },
   request: {
     bodyLimit: process.env.REQUEST_BODY_LIMIT || '10mb'
+  },
+  logging: {
+    level: resolveLogLevel(process.env.LOG_LEVEL)
   },
   maintenance: {
     enabled: process.env.MAINTENANCE_MODE === 'true',
