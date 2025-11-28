@@ -142,5 +142,6 @@ Available query parameters:
 - Extended configuration with rate limit and CORS settings
 - Added validation utility tests
 - Improved code quality and maintainability
+- See `CHANGELOG.md` for ongoing improvements.
 - Enhanced code documentation with JSDoc comments
 
