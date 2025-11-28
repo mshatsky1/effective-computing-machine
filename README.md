@@ -29,6 +29,10 @@ npm install
 cp env.example .env
 ```
 
+### Node.js Version
+
+The project targets Node.js `18.18.2` (see `.nvmrc`). Use `nvm use` to match the expected runtime before running scripts.
+
 ### Environment Variables
 
 | Name | Description | Default |
