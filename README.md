@@ -47,6 +47,7 @@ The project targets Node.js `18.18.2` (see `.nvmrc`). Use `nvm use` to match the
 | `MAINTENANCE_MESSAGE` | Message returned during maintenance | `Service temporarily unavailable` |
 | `MAINTENANCE_ALLOW_HEALTH` | Allow health endpoints while in maintenance | `true` |
 | `MAINTENANCE_RETRY_AFTER` | Retry-After hint (seconds) | `60` |
+| `LOG_LEVEL` | Logging level (`info`, `silent`) | `info` |
 
 ### Running Locally
 
