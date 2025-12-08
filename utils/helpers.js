@@ -12,6 +12,12 @@ function formatResponse(data, message = null) {
   return response;
 }
 
+/**
+ * Formats an error response
+ * @param {string} message - Error message
+ * @param {string|null} code - Optional error code
+ * @returns {Object} Formatted error response object
+ */
 function formatError(message, code = null) {
   const error = { success: false, error: message };
   if (code) {
