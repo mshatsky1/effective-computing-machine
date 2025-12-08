@@ -1,3 +1,7 @@
+/**
+ * Middleware to enforce JSON content type for API requests with body
+ * Returns 415 for non-JSON requests to POST/PUT/PATCH endpoints
+ */
 function requireJson(req, res, next) {
   const requiresBody = ['POST', 'PUT', 'PATCH'].includes(req.method);
   const targetsApi = req.path.startsWith('/api/');
