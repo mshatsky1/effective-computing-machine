@@ -28,6 +28,12 @@ function loadSeedData() {
   }
 }
 
+/**
+ * Normalizes enum values to lowercase strings
+ * @param {*} value - Value to normalize
+ * @param {*} fallback - Fallback value if value is falsy
+ * @returns {string} Normalized lowercase string
+ */
 function normalizeEnum(value, fallback) {
   return (value || fallback).toString().trim().toLowerCase();
 }
