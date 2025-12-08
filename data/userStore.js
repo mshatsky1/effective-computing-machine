@@ -46,6 +46,11 @@ function list() {
   return [...users];
 }
 
+/**
+ * Finds a user by ID
+ * @param {number} id - User ID to search for
+ * @returns {Object|undefined} User object or undefined if not found
+ */
 function findById(id) {
   return users.find(user => user.id === id);
 }
