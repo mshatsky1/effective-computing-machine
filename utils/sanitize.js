@@ -1,3 +1,8 @@
+/**
+ * Sanitizes a string by removing HTML-like characters and trimming whitespace
+ * @param {*} str - Value to sanitize
+ * @returns {*} Sanitized string or original value if not a string
+ */
 function sanitizeString(str) {
   if (typeof str !== 'string') return str;
   return str
