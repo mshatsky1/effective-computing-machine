@@ -1,3 +1,13 @@
+/**
+ * Maintenance mode middleware factory
+ * Returns 503 for all requests except health endpoints when enabled
+ * @param {Object} options - Configuration options
+ * @param {boolean} options.enabled - Whether maintenance mode is active
+ * @param {string} options.message - Error message to return
+ * @param {boolean} options.allowHealth - Allow health endpoints during maintenance
+ * @param {number} options.retryAfterSeconds - Retry-After header value
+ * @returns {Function} Express middleware function
+ */
 function maintenanceMode(options = {}) {
   const {
     enabled = false,
