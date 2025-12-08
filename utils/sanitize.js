@@ -15,6 +15,11 @@ function sanitizeOptionalString(str) {
   return sanitizeString(str);
 }
 
+/**
+ * Sanitizes user input object by cleaning all string fields
+ * @param {Object} user - User object to sanitize
+ * @returns {Object} Sanitized user object
+ */
 function sanitizeUserInput(user = {}) {
   return {
     name: sanitizeString(user.name),
