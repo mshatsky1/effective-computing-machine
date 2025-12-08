@@ -14,6 +14,13 @@ const SORT_FIELDS = {
 };
 const SORT_DIRECTIONS = new Set(['asc', 'desc']);
 
+/**
+ * Parses a date parameter from query string
+ * @param {string} value - Date string to parse
+ * @param {string} label - Label for error message
+ * @returns {Date|null} Parsed date or null if value is empty
+ * @throws {Error} If date format is invalid
+ */
 function parseDateParam(value, label) {
   if (!value) return null;
   const parsed = new Date(value);
