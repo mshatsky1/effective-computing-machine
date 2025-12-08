@@ -10,6 +10,11 @@ function validateEmail(email) {
   return emailRegex.test(email);
 }
 
+/**
+ * Validates a user object
+ * @param {Object} user - User object to validate
+ * @returns {Object} Validation result with valid flag and optional error message
+ */
 function validateUser(user) {
   if (!user || typeof user !== 'object') {
     return { valid: false, error: 'User data is required' };
