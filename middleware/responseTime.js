@@ -1,3 +1,7 @@
+/**
+ * Middleware to measure and report response time
+ * Sets X-Response-Time header with duration in milliseconds
+ */
 function responseTime(req, res, next) {
   const start = process.hrtime.bigint();
   const originalEnd = res.end;
