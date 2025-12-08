@@ -55,6 +55,12 @@ function findById(id) {
   return users.find(user => user.id === id);
 }
 
+/**
+ * Checks if a user with the given email exists
+ * @param {string} email - Email address to check
+ * @param {number|null} excludeId - User ID to exclude from check (for updates)
+ * @returns {boolean} True if email exists
+ */
 function existsByEmail(email, excludeId = null) {
   const normalized = (email || '').trim().toLowerCase();
   return users.some(user => 
