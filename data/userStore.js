@@ -38,6 +38,10 @@ function normalizeEnum(value, fallback) {
   return (value || fallback).toString().trim().toLowerCase();
 }
 
+/**
+ * Returns a copy of all users
+ * @returns {Array} Array of user objects
+ */
 function list() {
   return [...users];
 }
