@@ -154,12 +154,12 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
-    return res.status(400).json({ error: 'Invalid user ID' });
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Invalid user ID' });
   }
   
   const existingUser = userStore.findById(id);
   if (!existingUser) {
-    return res.status(404).json({ error: 'User not found' });
+    return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'User not found' });
   }
 
   const sanitized = sanitizeUserInput(req.body);
@@ -170,7 +170,7 @@ router.put('/:id', (req, res) => {
   };
   const validation = validateUser(payload);
   if (!validation.valid) {
-    return res.status(400).json({ error: validation.error });
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: validation.error });
   }
   
   const { name, email, role, status } = payload;
@@ -178,7 +178,7 @@ router.put('/:id', (req, res) => {
   
   // Check for duplicate email (excluding current user)
   if (userStore.existsByEmail(trimmedEmail, id)) {
-    return res.status(409).json({ error: 'Email already exists' });
+    return res.status(HTTP_STATUS.CONFLICT).json({ error: 'Email already exists' });
   }
   
   const updatedUser = userStore.update(id, { name, email: trimmedEmail, role, status });
