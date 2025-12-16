@@ -92,6 +92,16 @@ function create({ name, email, role, status }) {
   return user;
 }
 
+/**
+ * Updates an existing user
+ * @param {number} id - User ID to update
+ * @param {Object} userData - Updated user data
+ * @param {string} userData.name - Updated name
+ * @param {string} userData.email - Updated email
+ * @param {string} userData.role - Updated role
+ * @param {string} userData.status - Updated status
+ * @returns {Object|null} Updated user object or null if not found
+ */
 function update(id, { name, email, role, status }) {
   const index = users.findIndex(user => user.id === id);
   if (index === -1) {
