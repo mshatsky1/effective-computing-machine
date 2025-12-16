@@ -120,11 +120,11 @@ router.get('/export', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
-    return res.status(400).json({ error: 'Invalid user ID' });
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Invalid user ID' });
   }
   const user = userStore.findById(id);
   if (!user) {
-    return res.status(404).json({ error: 'User not found' });
+    return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'User not found' });
   }
   res.json(user);
 });
