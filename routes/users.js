@@ -151,6 +151,10 @@ router.get('/:id', (req, res) => {
   res.json(user);
 });
 
+/**
+ * POST /api/users
+ * Creates a new user
+ */
 router.post('/', (req, res) => {
   const sanitized = sanitizeUserInput(req.body);
   const payload = {
