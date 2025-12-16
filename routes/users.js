@@ -110,6 +110,10 @@ router.get('/summary', (req, res) => {
   res.json(summary);
 });
 
+/**
+ * GET /api/users/export
+ * Exports all users as CSV file
+ */
 router.get('/export', (req, res) => {
   const allUsers = userStore.list();
   const header = ['id', 'name', 'email', 'role', 'status', 'createdAt', 'updatedAt'];
