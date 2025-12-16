@@ -3,7 +3,7 @@ const router = express.Router();
 const { validateUser } = require('../utils/validation');
 const { sanitizeUserInput } = require('../utils/sanitize');
 const { paginate } = require('../utils/pagination');
-const { USER_ROLES, USER_STATUS } = require('../utils/constants');
+const { USER_ROLES, USER_STATUS, HTTP_STATUS } = require('../utils/constants');
 const { filterUsers, isValidRole, isValidStatus, normalize, sortUsers } = require('../utils/filters');
 const userStore = require('../data/userStore');
 
@@ -13,6 +13,8 @@ const SORT_FIELDS = {
   name: 'name'
 };
 const SORT_DIRECTIONS = new Set(['asc', 'desc']);
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
 
 /**
  * Parses a date parameter from query string
