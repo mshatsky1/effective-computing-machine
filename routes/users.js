@@ -44,6 +44,10 @@ function parseUserId(idParam) {
   return isNaN(id) ? null : id;
 }
 
+/**
+ * GET /api/users
+ * Lists users with pagination, filtering, and sorting
+ */
 router.get('/', (req, res) => {
   const page = parseInt(req.query.page, 10) || DEFAULT_PAGE;
   const limit = parseInt(req.query.limit, 10) || DEFAULT_LIMIT;
