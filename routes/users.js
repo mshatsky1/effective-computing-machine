@@ -188,13 +188,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
-    return res.status(400).json({ error: 'Invalid user ID' });
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Invalid user ID' });
   }
   const removed = userStore.remove(id);
   if (!removed) {
-    return res.status(404).json({ error: 'User not found' });
+    return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'User not found' });
   }
-  res.status(204).send();
+  res.status(HTTP_STATUS.NO_CONTENT).send();
 });
 
 // Export reset function for testing
