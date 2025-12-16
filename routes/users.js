@@ -28,10 +28,20 @@ function parseDateParam(value, label) {
   const parsed = new Date(value);
   if (Number.isNaN(parsed.getTime())) {
     const error = new Error(`Invalid ${label} date format`);
-    error.statusCode = 400;
+    error.statusCode = HTTP_STATUS.BAD_REQUEST;
     throw error;
   }
   return parsed;
+}
+
+/**
+ * Parses and validates a user ID from route parameters
+ * @param {string} idParam - ID parameter from route
+ * @returns {number|null} Parsed ID or null if invalid
+ */
+function parseUserId(idParam) {
+  const id = parseInt(idParam, 10);
+  return isNaN(id) ? null : id;
 }
 
 router.get('/', (req, res) => {
