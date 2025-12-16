@@ -4,6 +4,10 @@ const path = require('path');
 let users = [];
 let nextId = 1;
 
+/**
+ * Loads seed data from seed.json file if it exists
+ * Initializes the user store with pre-defined users
+ */
 function loadSeedData() {
   const seedPath = path.join(__dirname, 'seed.json');
   if (!fs.existsSync(seedPath)) {
