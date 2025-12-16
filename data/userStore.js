@@ -135,6 +135,10 @@ function remove(id) {
   return true;
 }
 
+/**
+ * Resets the user store to empty state
+ * Primarily used for testing
+ */
 function reset() {
   users = [];
   nextId = 1;
