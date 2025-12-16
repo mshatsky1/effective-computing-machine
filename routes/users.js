@@ -177,6 +177,10 @@ router.post('/', (req, res) => {
   res.status(HTTP_STATUS.CREATED).json(user);
 });
 
+/**
+ * PUT /api/users/:id
+ * Updates an existing user
+ */
 router.put('/:id', (req, res) => {
   const id = parseUserId(req.params.id);
   if (id === null) {
