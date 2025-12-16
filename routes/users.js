@@ -35,8 +35,8 @@ function parseDateParam(value, label) {
 }
 
 router.get('/', (req, res) => {
-  const page = parseInt(req.query.page, 10) || 1;
-  const limit = parseInt(req.query.limit, 10) || 10;
+  const page = parseInt(req.query.page, 10) || DEFAULT_PAGE;
+  const limit = parseInt(req.query.limit, 10) || DEFAULT_LIMIT;
   const search = req.query.search ? req.query.search.trim() : '';
   const role = normalize(req.query.role);
   const status = normalize(req.query.status);
