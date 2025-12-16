@@ -138,17 +138,17 @@ router.post('/', (req, res) => {
   };
   const validation = validateUser(payload);
   if (!validation.valid) {
-    return res.status(400).json({ error: validation.error });
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: validation.error });
   }
   const { name, email, role, status } = payload;
   
   // Check for duplicate email
   if (userStore.existsByEmail(email)) {
-    return res.status(409).json({ error: 'Email already exists' });
+    return res.status(HTTP_STATUS.CONFLICT).json({ error: 'Email already exists' });
   }
   
   const user = userStore.create({ name, email, role, status });
-  res.status(201).json(user);
+  res.status(HTTP_STATUS.CREATED).json(user);
 });
 
 router.put('/:id', (req, res) => {
