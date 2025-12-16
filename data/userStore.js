@@ -69,6 +69,15 @@ function existsByEmail(email, excludeId = null) {
   );
 }
 
+/**
+ * Creates a new user
+ * @param {Object} userData - User data object
+ * @param {string} userData.name - User name
+ * @param {string} userData.email - User email
+ * @param {string} userData.role - User role
+ * @param {string} userData.status - User status
+ * @returns {Object} Created user object
+ */
 function create({ name, email, role, status }) {
   const timestamp = new Date().toISOString();
   const user = {
