@@ -204,8 +204,8 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  if (isNaN(id)) {
+  const id = parseUserId(req.params.id);
+  if (id === null) {
     return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Invalid user ID' });
   }
   const removed = userStore.remove(id);
