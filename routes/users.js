@@ -95,6 +95,10 @@ router.get('/', (req, res) => {
   });
 });
 
+/**
+ * GET /api/users/summary
+ * Returns aggregated counts of users by role and status
+ */
 router.get('/summary', (req, res) => {
   const allUsers = userStore.list();
   const summary = allUsers.reduce((acc, user) => {
