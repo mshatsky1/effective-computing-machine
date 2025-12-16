@@ -121,6 +121,11 @@ function update(id, { name, email, role, status }) {
   return updated;
 }
 
+/**
+ * Removes a user by ID
+ * @param {number} id - User ID to remove
+ * @returns {boolean} True if user was removed, false if not found
+ */
 function remove(id) {
   const index = users.findIndex(user => user.id === id);
   if (index === -1) {
