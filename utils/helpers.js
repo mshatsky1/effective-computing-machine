@@ -31,7 +31,9 @@ function formatError(message, code = null) {
  * @returns {string} Unique identifier
  */
 function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+  const timestamp = Date.now().toString(36);
+  const random = Math.random().toString(36).substring(2, 11);
+  return `${timestamp}-${random}`;
 }
 
 module.exports = { formatResponse, formatError, generateId };
