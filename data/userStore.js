@@ -87,7 +87,7 @@ function create({ name, email, role, status }) {
   const user = {
     id: nextId++,
     name: name.trim(),
-    email: email.trim(),
+    email: email.trim().toLowerCase(),
     role: normalizeEnum(role, 'member'),
     status: normalizeEnum(status, 'active'),
     createdAt: timestamp
