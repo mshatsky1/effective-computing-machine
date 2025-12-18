@@ -28,6 +28,7 @@ function maintenanceMode(options = {}) {
     }
 
     res.setHeader('Retry-After', retryAfterSeconds);
+    res.setHeader('X-Maintenance-Mode', 'true');
     return res.status(503).json({
       error: 'maintenance_mode',
       message,
