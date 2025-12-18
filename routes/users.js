@@ -139,6 +139,10 @@ router.get('/export', (req, res) => {
   res.send(body);
 });
 
+/**
+ * GET /api/users/:id
+ * Retrieves a single user by ID
+ */
 router.get('/:id', (req, res) => {
   const id = parseUserId(req.params.id);
   if (id === null) {
