@@ -116,7 +116,7 @@ function update(id, { name, email, role, status }) {
   const updated = {
     ...existing,
     name: name.trim(),
-    email: email.trim(),
+    email: email.trim().toLowerCase(),
     role: normalizeEnum(role, existing.role || 'member'),
     status: normalizeEnum(status, existing.status || 'active'),
     updatedAt: timestamp
