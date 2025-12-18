@@ -219,6 +219,10 @@ router.put('/:id', (req, res) => {
   res.json(updatedUser);
 });
 
+/**
+ * DELETE /api/users/:id
+ * Deletes a user by ID
+ */
 router.delete('/:id', (req, res) => {
   const id = parseUserId(req.params.id);
   if (id === null) {
