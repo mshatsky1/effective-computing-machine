@@ -22,7 +22,8 @@ module.exports = {
     name: 'Effective Computing Machine API',
     description: 'A REST API service for managing users',
     owner: 'Platform Team',
-    version
+    version,
+    contact: process.env.SERVICE_CONTACT || 'api@example.com'
   },
   rateLimit: {
     windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS) || 60000,
