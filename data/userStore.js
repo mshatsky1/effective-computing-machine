@@ -23,9 +23,10 @@ function loadSeedData() {
     users = parsed.map(entry => ({
       ...entry,
       id: entry.id || nextId++,
-      createdAt: entry.createdAt || new Date().toISOString()
+      createdAt: entry.createdAt || new Date().toISOString(),
+      updatedAt: entry.updatedAt || undefined
     }));
-    const highestId = users.reduce((max, user) => Math.max(max, user.id), 0);
+    const highestId = users.reduce((max, user) => Math.max(max, user.id || 0), 0);
     nextId = highestId + 1;
   } catch (error) {
     console.warn('Failed to load seed data:', error.message);
