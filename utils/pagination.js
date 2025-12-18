@@ -1,5 +1,6 @@
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
+const MAX_LIMIT = 100;
 const MIN_PAGE = 1;
 const MIN_LIMIT = 1;
 
@@ -13,7 +14,7 @@ const MIN_LIMIT = 1;
  */
 function paginate(items, { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = {}) {
   const safePage = page < MIN_PAGE ? DEFAULT_PAGE : page;
-  const safeLimit = limit < MIN_LIMIT ? DEFAULT_LIMIT : limit;
+  const safeLimit = limit < MIN_LIMIT ? DEFAULT_LIMIT : (limit > MAX_LIMIT ? MAX_LIMIT : limit);
   const startIndex = (safePage - 1) * safeLimit;
   const endIndex = safePage * safeLimit;
   const paginatedItems = items.slice(startIndex, endIndex);
