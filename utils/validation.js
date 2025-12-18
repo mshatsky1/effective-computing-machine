@@ -25,6 +25,9 @@ function validateUser(user) {
   if (user.name.trim().length < 2) {
     return { valid: false, error: 'Name must be at least 2 characters' };
   }
+  if (user.name.trim().length > 100) {
+    return { valid: false, error: 'Name must not exceed 100 characters' };
+  }
   if (!user.email || typeof user.email !== 'string' || !validateEmail(user.email)) {
     return { valid: false, error: 'Invalid email format' };
   }
