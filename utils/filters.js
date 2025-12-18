@@ -37,6 +37,9 @@ function filterUsers(users, { search, role, status, createdAfter, createdBefore,
       matches = matches && target.includes(normalizedSearch);
     }
 
+    // Early exit if already doesn't match
+    if (!matches) return false;
+
     if (normalizedRole && matches) {
       matches = user.role === normalizedRole;
     }
