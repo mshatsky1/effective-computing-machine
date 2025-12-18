@@ -14,7 +14,10 @@ const ERROR_MESSAGES = {
   INVALID_ID: 'Invalid user ID',
   USER_NOT_FOUND: 'User not found',
   EMAIL_EXISTS: 'Email already exists',
-  VALIDATION_ERROR: 'Validation error'
+  VALIDATION_ERROR: 'Validation error',
+  INVALID_DATE_FORMAT: 'Invalid date format',
+  INVALID_SORT_FIELD: 'Invalid sort field',
+  INVALID_SORT_DIRECTION: 'Invalid sort direction'
 };
 
 const USER_STATUS = {
