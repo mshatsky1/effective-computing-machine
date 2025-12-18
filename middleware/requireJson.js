@@ -16,7 +16,8 @@ function requireJson(req, res, next) {
 
   return res.status(415).json({
     error: 'unsupported_media_type',
-    message: 'Requests must use Content-Type: application/json'
+    message: 'Requests must use Content-Type: application/json',
+    received: req.get('Content-Type') || 'none'
   });
 }
 
