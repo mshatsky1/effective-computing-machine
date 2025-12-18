@@ -34,6 +34,11 @@ router.get('/ready', (req, res) => {
     dependencies: {
       datastore: 'in-memory',
       cache: 'n/a'
+    },
+    memory: {
+      used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
+      total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
+      unit: 'MB'
     }
   };
   res.json(buildPayload({ check: 'readiness', details: ready }));
