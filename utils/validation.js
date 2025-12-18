@@ -28,7 +28,10 @@ function validateUser(user) {
   if (user.name.trim().length > 100) {
     return { valid: false, error: 'Name must not exceed 100 characters' };
   }
-  if (!user.email || typeof user.email !== 'string' || !validateEmail(user.email)) {
+  if (!user.email || typeof user.email !== 'string') {
+    return { valid: false, error: 'Email is required and must be a string' };
+  }
+  if (!validateEmail(user.email)) {
     return { valid: false, error: 'Invalid email format' };
   }
   if (user.role && !Object.values(USER_ROLES).includes(user.role)) {
