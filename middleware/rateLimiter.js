@@ -25,8 +25,10 @@ function rateLimiter(windowMs = 60000, maxRequests = 100) {
     }
     
     if (limit.count >= maxRequests) {
+      const retryAfter = Math.ceil((limit.resetTime - now) / 1000);
       return res.status(429).json({ 
-        error: 'Too many requests, please try again later' 
+        error: 'Too many requests, please try again later',
+        retryAfter
       });
     }
     
