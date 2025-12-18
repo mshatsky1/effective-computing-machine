@@ -22,7 +22,8 @@ function requestLogger(req, res, next) {
       status: res.statusCode,
       durationMs: Number(durationMs.toFixed(2)),
       contentLength: res.get('Content-Length') || 0,
-      userAgent: req.get('user-agent') || ''
+      userAgent: req.get('user-agent') || '',
+      ip: req.ip || req.connection.remoteAddress || 'unknown'
     };
     console.log(JSON.stringify(payload));
   });
