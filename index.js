@@ -47,5 +47,7 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${config.nodeEnv}`);
+  console.log(`Service: ${config.service.name} v${config.service.version}`);
 });
 
