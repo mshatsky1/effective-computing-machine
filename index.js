@@ -34,7 +34,8 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/health',
       users: '/api/users'
-    }
+    },
+    documentation: 'See README.md for API documentation'
   });
 });
 
